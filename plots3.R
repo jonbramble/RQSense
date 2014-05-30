@@ -39,7 +39,7 @@ colnames(S4_d) <- c('t','d3','d5','d7','d9','d11','d13')
 f_range = c(-40,0)
 d_range = c(-5,20)
 t_range = c(0,11500)
-epoints = c(4500,5100,5550,7800,8900)
+epoints = c(1700,5555,6560,7800,8900)
 
 f5_1 <- data.frame(S1_f$t)
 f5_1$S1 <- S1_f$f5
@@ -65,8 +65,17 @@ a <- rbind(f5_1,f5_2)
 b <- rbind(f5_3,f5_4)
 c <- rbind(a,b)
 
-fplot <- ggplot(c,aes(x=t,y=frequency,group=sensor,color=sensor))
-fplot + geom_line() + ylab("f (Hz)")
+
+ylab = expression(paste(Delta,"f /Hz"))
+
+fplot <- ggplot(c,aes(x=t,y=frequency,group=sensor,color=sensor)) + scale_x_continuous(limits = t_range) + geom_vline(xintercept = epoints, linetype = "longdash")
+fplot + geom_line() +xlab("time /s") + ylab(ylab) + scale_color_discrete(name="Sensor",breaks=c("S1", "S3", "S2", "S4"),labels=c("MIA-1", "MIA-2", "Control Adhiron", "No Adhiron")) +
+   annotate("text", label = "A", x = epoints[1]+250, y = 8, size = 6, colour = "black") +
+   annotate("text", label = "B", x = epoints[2]+250, y = 8, size = 6, colour = "black") +
+   annotate("text", label = "C", x = epoints[3]+250, y = 8, size = 6, colour = "black") +
+   annotate("text", label = "D", x = epoints[4]+250, y = 8, size = 6, colour = "black") +
+   annotate("text", label = "E", x = epoints[5]+250, y = 8, size = 6, colour = "black")
+
 
 #S1_fplot<- ggplot() + geom_line(data=S1_f, aes(t,f5, col = "5")) + scale_y_continuous(limits = f_range) + scale_x_continuous(limits = t_range) + theme(legend.position = "none") 
 #S2_fplot<- ggplot() + geom_line(data=S2_f, aes(t,f5, col = "5")) + scale_y_continuous(limits = f_range) + scale_x_continuous(limits = t_range) + theme(legend.position = "none")
