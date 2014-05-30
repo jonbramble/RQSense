@@ -61,20 +61,55 @@ f5_4$S4 <- S4_f$f5
 f5_4$sensor <- "S4"
 colnames(f5_4)=c('t','frequency','sensor')
 
-a <- rbind(f5_1,f5_2)
-b <- rbind(f5_3,f5_4)
-c <- rbind(a,b)
+d5_1 <- data.frame(S1_f$t)
+d5_1$S1 <- S1_d$d5
+d5_1$sensor <- "S1"
+colnames(d5_1)=c('t','dissipation','sensor')
 
+d5_2 <- data.frame(S2_f$t)
+d5_2$S2 <- S2_d$d5
+d5_2$sensor <- "S2"
+colnames(d5_2)=c('t','dissipation','sensor')
 
-ylab = expression(paste(Delta,"f /Hz"))
+d5_3 <- data.frame(S3_f$t)
+d5_3$S3 <- S3_d$d5
+d5_3$sensor <- "S3"
+colnames(d5_3)=c('t','dissipation','sensor')
 
-fplot <- ggplot(c,aes(x=t,y=frequency,group=sensor,color=sensor)) + scale_x_continuous(limits = t_range) + geom_vline(xintercept = epoints, linetype = "longdash")
-fplot + geom_line() +xlab("time /s") + ylab(ylab) + scale_color_discrete(name="Sensor",breaks=c("S1", "S3", "S2", "S4"),labels=c("MIA-1", "MIA-2", "Control Adhiron", "No Adhiron")) +
-   annotate("text", label = "A", x = epoints[1]+250, y = 8, size = 6, colour = "black") +
-   annotate("text", label = "B", x = epoints[2]+250, y = 8, size = 6, colour = "black") +
-   annotate("text", label = "C", x = epoints[3]+250, y = 8, size = 6, colour = "black") +
-   annotate("text", label = "D", x = epoints[4]+250, y = 8, size = 6, colour = "black") +
-   annotate("text", label = "E", x = epoints[5]+250, y = 8, size = 6, colour = "black")
+d5_4 <- data.frame(S4_f$t)
+d5_4$S4 <- S4_d$d5
+d5_4$sensor <- "S4"
+colnames(d5_4)=c('t','dissipation','sensor')
+
+f5a <- rbind(f5_1,f5_2)
+f5b <- rbind(f5_3,f5_4)
+f5c <- rbind(f5a,f5b)
+
+d5a <- rbind(d5_1,d5_2)
+d5b <- rbind(d5_3,d5_4)
+d5c <- rbind(d5a,d5b)
+
+f_ylab = expression(paste(Delta,"f /Hz"))
+d_ylab = expression(paste("D x10"^"-6"))
+
+label_shift = 250
+
+fplot <- ggplot(f5c,aes(x=t,y=frequency,group=sensor,color=sensor)) + scale_x_continuous(limits = t_range) + geom_vline(xintercept = epoints, linetype = "longdash")
+fplot + geom_line() +xlab("time /s") + ylab(f_ylab) + scale_color_discrete(name="Sensor",breaks=c("S1", "S3", "S2", "S4"),labels=c("MIA-1", "MIA-2", "Control Adhiron", "No Adhiron")) +
+   annotate("text", label = "A", x = epoints[1]+label_shift , y = 8, size = 6, colour = "black") +
+   annotate("text", label = "B", x = epoints[2]+label_shift , y = 8, size = 6, colour = "black") +
+   annotate("text", label = "C", x = epoints[3]+label_shift , y = 8, size = 6, colour = "black") +
+   annotate("text", label = "D", x = epoints[4]+label_shift , y = 8, size = 6, colour = "black") +
+   annotate("text", label = "E", x = epoints[5]+label_shift , y = 8, size = 6, colour = "black")
+
+dplot <- ggplot(d5c,aes(x=t,y=dissipation,group=sensor,color=sensor)) + scale_x_continuous(limits = t_range) + geom_vline(xintercept = epoints, linetype = "longdash")
+dplot + geom_line() +xlab("time /s") + ylab(d_ylab) + scale_color_discrete(name="Sensor",breaks=c("S1", "S3", "S2", "S4"),labels=c("MIA-1", "MIA-2", "Control Adhiron", "No Adhiron")) +
+  annotate("text", label = "A", x = epoints[1]+label_shift , y = 48, size = 6, colour = "black") +
+  annotate("text", label = "B", x = epoints[2]+label_shift , y = 48, size = 6, colour = "black") +
+  annotate("text", label = "C", x = epoints[3]+label_shift , y = 48, size = 6, colour = "black") +
+  annotate("text", label = "D", x = epoints[4]+label_shift , y = 48, size = 6, colour = "black") +
+  annotate("text", label = "E", x = epoints[5]+label_shift , y = 48, size = 6, colour = "black")
+
 
 
 #S1_fplot<- ggplot() + geom_line(data=S1_f, aes(t,f5, col = "5")) + scale_y_continuous(limits = f_range) + scale_x_continuous(limits = t_range) + theme(legend.position = "none") 
